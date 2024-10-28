@@ -1,0 +1,444 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Space+Grotesk:wght@300..700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+body {
+  /* 3. Add accessible line-height */
+  line-height: 1.5;
+  /* 4. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Josefin Sans';
+}
+
+/* 5. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 6. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* 7. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* 8. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+/*
+  9. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
+
+.header {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding-inline: 24px;
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background-image: url("../images/header-bg.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.25;
+  z-index: 1;
+}
+
+body.dark-mode .header {
+  background-color: white;
+}
+
+body.dark-mode .header::before {
+  background-image: url("../images/header-darkmode-bg.svg");
+  background-size: 150%;
+  background-position: right;
+}
+
+body.dark-mode .header::after {
+  background: linear-gradient(135deg, #3710BD 0%, #A42395 100%);
+} 
+
+.header::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(225deg, #5596ff 0%, #ac2deb 100%);
+  z-index: 2;
+  mix-blend-mode: multiply;
+}
+
+.todo-header-logo {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 540px;
+  z-index: 3;
+}
+
+.createTodo {
+  background-color: #ffff;
+  z-index: 5;
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  max-width: 540px;
+  padding: 14px 20px;
+  border-radius: 5px;
+  margin-top: 40px;
+}
+
+body.dark-mode .createTodo {
+  background-color: #25273D;
+  box-shadow: 0px 35px 50px -15px #00000080;
+}
+
+.createInput {
+  border: none;
+  align-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+body.dark-mode .createInput {
+  background-color: #25273D;
+}
+
+.createInput:focus-visible {
+  outline: none;
+}
+
+.createInput::placeholder {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: -0.1666666716337204px;
+  text-align: left;
+  color: #9495a5;
+}
+
+body.dark-mode .createInput::placeholder {
+  color: #767992;
+  background-color: #25273D;
+}
+
+.circle-checkbox-label,
+.checkboxTodoLabel {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.circle-checkbox,
+.checkBoxTodo {
+  display: none;
+}
+
+.circle-checkbox + span,
+.checkBoxTodo + span {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #d1d2da;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+body.dark-mode .circle-checkbox + span,
+body.dark-mode .checkBoxTodo + span {
+  border: 1px solid #393A4B;
+}
+
+.circle-checkbox:checked + span,
+.checkBoxTodo:checked + span {
+  background: linear-gradient(135deg, #55ddff 0%, #c058f3 100%);
+}
+
+.circle-checkbox:checked + span::after,
+.checkBoxTodo:checked + span::after {
+  content: "";
+  background-image: url("/assets/images/tik.svg");
+  background-size: cover;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 8px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.listContainer {
+  margin-top: -20px;
+  z-index: 2;
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.todo-list-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(227, 228, 241, 1);
+}
+
+.listBox {
+  list-style: none;
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0px 35px 50px -15px rgba(194, 195, 214, 0.5);
+  border-radius: 5px;
+}
+
+body.dark-mode .listBox {
+  background-color: rgba(37, 39, 61, 1);
+  box-shadow: 0px 35px 50px -15px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .todo-list-item {
+  border-bottom: 1px solid #393A4B;
+  ;
+}
+
+.todoList {
+  padding-left: 0px;
+}
+
+.todoText {
+  display: flex;
+  gap: 12px;
+}
+
+.deleteBtn {
+  border: none;
+  background-color: transparent;
+}
+
+.clearCompletedBtn {
+  position: relative;
+  color: rgba(148, 149, 165, 1);
+  background-color: transparent;
+  border: none;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: -0.1666666716337204px;
+  text-align: right;
+}
+
+.kalanItemSayisi {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: -0.1666666716337204px;
+  text-align: left;
+  color: rgba(148, 149, 165, 1);
+  align-content: center;
+}
+
+.listEnd {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 16px 20px;
+}
+
+.allBtn,
+.activeBtn,
+.completedBtn {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: -0.1944444477558136px;
+  text-align: left;
+  color: rgba(148, 149, 165, 1);
+  border: none;
+  background-color: transparent;
+}
+
+body.dark-mode .allBtn,
+body.dark-mode .activeBtn,
+body.dark-mode .completedBtn {
+  color: #5B5E7E;
+}
+
+.allBtn:focus,
+.activeBtn:focus,
+.completedBtn:focus {
+  color: rgba(58, 124, 253, 1);
+}
+
+body.dark-mode .allBtn:focus,
+body.dark-mode .activeBtn:focus,
+body.dark-mode .completedBtn:focus {
+  color: rgba(58, 124, 253, 1);
+}
+
+body.dark-mode .createInput{
+  color: #C8CBE7;
+}
+
+.filterBox {
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0px 35px 50px -15px rgba(194, 195, 214, 0.5);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 16px 20px;
+  margin-top: 16px;
+  margin-bottom: 126px;
+}
+
+body.dark-mode .filterBox {
+  background-color: #25273D;
+  box-shadow: 0px 35px 50px -15px #00000080;
+}
+
+.todoText {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: -0.1666666716337204px;
+  text-align: left;
+  align-content: center;
+  align-self: center;
+}
+
+.todo {
+  color: rgba(73, 76, 107, 1);
+}
+
+.completed {
+  text-decoration: line-through;
+  color: rgba(209, 210, 218, 1);
+}
+
+body.dark-mode .todo {
+  color: #C8CBE7;
+}
+
+body.dark-mode .completed {
+  color: #4D5067;
+}
+
+.light-mode {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.dark-mode {
+  background-color: #191824;;
+  color: #ffffff;
+}
+
+.theme{
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+@media (540px < width) {
+  .listContainer {
+    padding-inline: 0px;
+  }
+}
+
+@media (765px < width) {
+
+  .todoText {
+font-size: 18px;
+line-height: 18px;
+letter-spacing: -0.25px;
+    text-align: left;
+    align-content: center;
+    align-self: center;
+  }
+  
+  .todo {
+    color: rgba(73, 76, 107, 1);
+  }
+  
+  .completed {
+    text-decoration: line-through;
+    color: rgba(209, 210, 218, 1);
+  }
+
+  .createInput::placeholder {
+font-size: 18px;
+line-height: 18px;
+letter-spacing: -0.25px;
+text-align: left;
+  }
+
+  .header {
+    height: 300px;
+  }
+
+  .header::before {
+    height: 300px;
+  }
+
+  .header::after {
+    height: 300px;
+  }
+}

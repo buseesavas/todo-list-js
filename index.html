@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo List</title>
+  <script src="assets/js/todo.js" defer></script>
+  <link rel="stylesheet" href="assets/css/todo.css">
+</head>
+<body>
+  <div class="container">
+    <div class="todo-box">
+      <div class="header">
+          <div class="todo-header-logo">
+            <img class="todoIcon" src="assets/images/todo-icon.svg" alt="">
+            <button class="theme">
+              <img class="icon light" src="assets/images/light-logo.svg" alt="">
+              <img class="icon dark" src="assets/images/dark-icon.svg" alt="" style="display: none;">
+            </button>
+          </div>
+          <div class="createTodo">
+            <label class="circle-checkbox-label">
+              <input type="checkBox" class="circle-checkbox">
+              <span></span>
+            </label>
+            <input value="" class="createInput" type="text" placeholder="Create a new todo…">
+          </div>
+      </div>
+      <div class="listContainer">
+        <div class="listBox">
+          <ul class="todoList">
+          </ul>
+          <div class="listEnd">
+            <p class="kalanItemSayisi"></p>
+            <button class="clearCompletedBtn">Clear Completed</button>
+          </div>
+        </div>
+        <div class="filterBox">
+          <button class="allBtn">All</button>
+          <button class="activeBtn">Active</button>
+          <button class="completedBtn">Completed</button>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
+
